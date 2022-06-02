@@ -31,10 +31,13 @@ export const SimpleForm = () => {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setEmail(e.target.value);
 
-      const re =
-        /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-
-      if (!re.test(String(e.target.value).toLowerCase())) {
+      if (
+        e.target.value
+          .toLowerCase()
+          .match(
+            /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+          )
+      ) {
         setEmailError("Не корректный email");
       } else {
         setEmailError("");
@@ -94,7 +97,11 @@ export const SimpleForm = () => {
           onBlur={blurHanndler}
           onChange={passwordHandler}
         />
-        <button type="submit" style={{ display: "block" }} disabled={!formValid}>
+        <button
+          type="submit"
+          style={{ display: "block" }}
+          disabled={!formValid}
+        >
           Registration
         </button>
       </form>
