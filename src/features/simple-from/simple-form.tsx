@@ -1,99 +1,35 @@
 import React from "react";
+import * as hooks from "./simple-form.hooks";
+import * as Markup from "./simple-form.styles";
 
 export const SimpleForm = () => {
-  const [email, setEmail] = React.useState<string>("");
-  const [password, setPassword] = React.useState<string>("");
-  const [emailDirty, setEmailDirty] = React.useState<boolean>(false);
-  const [passwordDirty, setPasswordDirty] = React.useState<boolean>(false);
-  const [emailError, setEmailError] = React.useState<string>(
-    "Email не может быть пустым"
-  );
-  const [passwordError, setPasswordError] = React.useState<string>(
-    "Pasword не может быть пустым"
-  );
-  const [formValid, setFormValid] = React.useState<boolean>(false);
-
-  const blurHanndler = React.useCallback(
-    (ev: React.FocusEvent<HTMLInputElement>) => {
-      switch (ev.target.name) {
-        case "email":
-          setEmailDirty(true);
-          break;
-        case "password":
-          setPasswordDirty(true);
-          break;
-      }
-    },
-    []
-  );
-
-  const emailHandler = React.useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setEmail(e.target.value);
-
-      if (
-        e.target.value
-          .toLowerCase()
-          .match(
-            /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
-          )
-      ) {
-        setEmailError("Не корректный email");
-      } else {
-        setEmailError("");
-      }
-    },
-    []
-  );
-
-  const passwordHandler = React.useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setPassword(e.target.value);
-      if (e.target.value.length < 3 || e.target.value.length > 20) {
-        setPasswordError("Пароль д.б. больше 3-х и меньше 20 символов");
-
-        if (!e.target.value) {
-          setPasswordError("Pasword не может быть пустым");
-        }
-      } else {
-        setPasswordError("");
-      }
-    },
-    []
-  );
-
-  React.useEffect(() => {
-    if (emailError || passwordError) {
-      setFormValid(false);
-    } else {
-      setFormValid(true);
-    }
-  }, [emailError, passwordError]);
+  const { email, emailError, emailHandler } = hooks.useEmailData();
+  const { password, passwordError, passwordHandler } = hooks.usePasswordData();
+  const { formValid, emailDirty, passwordDirty, blurHanndler } =
+    hooks.useFormValid(emailError, passwordError);
 
   return (
     <div style={{ border: "1px solid black" }}>
-      <form>
+      <Markup.From>
         {emailDirty && emailError && (
           <div style={{ color: "red" }}>{emailError}</div>
         )}
-        <input
+        <Markup.Input
           name="email"
           value={email}
           type="text"
           placeholder="Enter you e-mail"
-          style={{ display: "block" }}
           onBlur={blurHanndler}
           onChange={emailHandler}
         />
         {passwordDirty && passwordError && (
           <div style={{ color: "red" }}>{passwordError}</div>
         )}
-        <input
+        <Markup.Input
           name="password"
           value={password}
           type="password"
           placeholder="Enter you password"
-          style={{ display: "block" }}
           onBlur={blurHanndler}
           onChange={passwordHandler}
         />
@@ -104,7 +40,7 @@ export const SimpleForm = () => {
         >
           Registration
         </button>
-      </form>
+      </Markup.From>
     </div>
   );
 };
