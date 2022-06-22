@@ -31,8 +31,8 @@ export const ReactHookForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    /** Очистка формы */
+    formState: { errors, isValid },
+    /** Очистка формы после submit */
     reset,
     watch,
     /**
@@ -46,21 +46,20 @@ export const ReactHookForm = () => {
     defaultValues: {
       email: "any@any.ry",
     },
-    // mode: "onBlur",
+    /** mode: настройка режима */
     mode: "onChange",
+    // mode: "onBlur",
   });
 
   //TODO: для отправки данных на сервер
   const onSubmit: SubmitHandler<ReactHookFormFields> = (data) => {
-    console.log(data);
+    alert(`${JSON.stringify(data)}`);
     /** Очистка формы */
     reset();
   };
 
   React.useEffect(() => {
-    const subscription = watch((value, { name, type }) =>
-      console.log(value, name, type)
-    );
+    const subscription = watch((value, { name, type }) => console.log(value, name, type));
 
     return () => subscription.unsubscribe();
   }, [watch]);
@@ -77,9 +76,25 @@ export const ReactHookForm = () => {
             type="text"
             placeholder="Name"
           />
-          {errors.name && (
-            <div style={{ color: "red" }}>{errors.name.message}</div>
-          )}
+          {errors.name && <div style={{ color: "red" }}>{errors.name.message}</div>}
+        </div>
+
+        <div>
+          <label>
+            Surname:
+            <input
+              {...register("surname", {
+                /** Валидация(текст ошибки) */
+                required: "Surname is require field!",
+                minLength: {
+                  value: 2,
+                  message: "Минимум 2 символа",
+                },
+              })}
+              type="text"
+              placeholder="Surname"
+            />
+          </label>
         </div>
 
         <div>
@@ -98,9 +113,7 @@ export const ReactHookForm = () => {
             type="email"
             placeholder="Email"
           />
-          {errors.email && (
-            <div style={{ color: "red" }}>{errors.email.message}</div>
-          )}
+          {errors.email && <div style={{ color: "red" }}>{errors.email.message}</div>}
         </div>
 
         <Controller
@@ -123,7 +136,9 @@ export const ReactHookForm = () => {
         />
 
         <div>
-          <button type="submit">Send</button>
+          <button type="submit" disabled={!isValid}>
+            Send
+          </button>
         </div>
       </form>
       <div>
@@ -131,9 +146,8 @@ export const ReactHookForm = () => {
           onClick={() => {
             setValue("name", "Michail");
             setValue("email", "michail@any.ry");
-          }}
-        >
-          Field data
+          }}>
+          Кнопка автозаполнения формы
         </button>
       </div>
     </div>

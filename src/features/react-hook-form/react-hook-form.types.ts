@@ -8,6 +8,7 @@ type Adress = {
 export type ReactHookFormFields = {
   email: string;
   name: string;
+  surname: string;
   address: Adress;
 };
 
