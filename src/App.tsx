@@ -1,5 +1,5 @@
 import React from "react";
-import { SimpleForm, ReactHookForm } from "./features";
+import { SimpleForm, ReactHookForm, FormicYup } from "./features";
 
 import "./App.css";
 
@@ -8,6 +8,8 @@ function App() {
     <div className="App">
       <SimpleForm />
       <ReactHookForm />
+      <hr />
+      <FormicYup />
     </div>
   );
 }
