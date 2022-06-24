@@ -12,14 +12,15 @@ export const useEmailData = () => {
         // eslint-disable-next-line
         /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
-        
-      if (!re.test(String(e.target.value).toLowerCase())) {
+      if (email.length === 0) {
+        setEmailError("Email не может быть пустым");
+      } else if (!re.test(String(e.target.value).toLowerCase())) {
         setEmailError("Не корректный email");
       } else {
         setEmailError("");
       }
     },
-    [setEmail, setEmailError]
+    [setEmail, setEmailError, email.length]
   );
 
   return { email, emailError, emailHandler };

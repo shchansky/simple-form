@@ -2,6 +2,7 @@ import React from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import ReactSelect from "react-select";
 import * as consts from "./react-hook-form.consts";
+import * as Markup from "./react-hook-form.styles";
 import type { ReactHookFormFields, Options } from "./react-hook-form.types";
 
 const getValue = (value: string) => {
@@ -47,10 +48,11 @@ export const ReactHookForm = () => {
   }, [watch]);
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <Markup.Container>
+      <Markup.Form onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <input
+          <Markup.Error>{errors.name && errors.name.message}</Markup.Error>
+          <Markup.Input
             {...register("name", {
               /** Валидация(текст ошибки) */
               required: "Name is require field!",
@@ -58,29 +60,25 @@ export const ReactHookForm = () => {
             type="text"
             placeholder="Name"
           />
-          {errors.name && <div style={{ color: "red" }}>{errors.name.message}</div>}
         </div>
 
         <div>
-          <label>
-            Surname:
-            <input
-              {...register("surname", {
-                /** Валидация(текст ошибки) */
-                required: "Surname is require field!",
-                minLength: {
-                  value: 2,
-                  message: "Минимум 2 символа",
-                },
-              })}
-              type="text"
-              placeholder="Surname"
-            />
-          </label>
+          <Markup.Input
+            {...register("surname", {
+              /** Валидация(текст ошибки) */
+              required: "Surname is require field!",
+              minLength: {
+                value: 2,
+                message: "Минимум 2 символа",
+              },
+            })}
+            type="text"
+            placeholder="Surname"
+          />
         </div>
 
         <div>
-          <input
+          <Markup.Input
             {...register("email", {
               /** Валидация(текст ошибки) */
               required: "Email is require field!",
@@ -118,20 +116,20 @@ export const ReactHookForm = () => {
         />
 
         <div>
-          <button type="submit" disabled={!isValid}>
+          <Markup.Button type="submit" disabled={!isValid}>
             Send
-          </button>
+          </Markup.Button>
         </div>
-      </form>
+      </Markup.Form>
       <div>
-        <button
+        <Markup.Button
           onClick={() => {
             setValue("name", "Michail");
             setValue("email", "michail@any.ry");
           }}>
           Кнопка автозаполнения формы
-        </button>
+        </Markup.Button>
       </div>
-    </div>
+    </Markup.Container>
   );
 };
