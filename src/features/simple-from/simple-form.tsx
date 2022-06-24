@@ -5,15 +5,13 @@ import * as Markup from "./simple-form.styles";
 export const SimpleForm = () => {
   const { email, emailError, emailHandler } = hooks.useEmailData();
   const { password, passwordError, passwordHandler } = hooks.usePasswordData();
-  const { formValid, emailDirty, passwordDirty, blurHanndler } =
-    hooks.useFormValid(emailError, passwordError);
+  const { formValid, emailDirty, passwordDirty, blurHanndler } = hooks.useFormValid(emailError, passwordError);
 
   return (
-    <div style={{ border: "1px solid black" }}>
-      <Markup.From>
-        {emailDirty && emailError && (
-          <div style={{ color: "red" }}>{emailError}</div>
-        )}
+    <Markup.Container>
+      <Markup.Header>Simple Form</Markup.Header>
+      <Markup.Form>
+        <Markup.Error style={{ color: "red" }}>{emailDirty && emailError}</Markup.Error>
         <Markup.Input
           name="email"
           value={email}
@@ -22,9 +20,7 @@ export const SimpleForm = () => {
           onBlur={blurHanndler}
           onChange={emailHandler}
         />
-        {passwordDirty && passwordError && (
-          <div style={{ color: "red" }}>{passwordError}</div>
-        )}
+        <Markup.Error style={{ color: "red" }}>{passwordDirty && passwordError}</Markup.Error>
         <Markup.Input
           name="password"
           value={password}
@@ -33,14 +29,10 @@ export const SimpleForm = () => {
           onBlur={blurHanndler}
           onChange={passwordHandler}
         />
-        <button
-          type="submit"
-          style={{ display: "block" }}
-          disabled={!formValid}
-        >
+        <Markup.Button type="submit" style={{ display: "block" }} disabled={!formValid}>
           Registration
-        </button>
-      </Markup.From>
-    </div>
+        </Markup.Button>
+      </Markup.Form>
+    </Markup.Container>
   );
 };

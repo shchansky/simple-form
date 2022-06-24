@@ -2,6 +2,7 @@ import React from "react";
 import { Formik, Form } from "formik";
 import * as yup from "yup";
 
+
 export const FormicYup = () => {
   const validationSchema = yup.object().shape({
     name: yup.string().required("Обязательно"),
@@ -19,16 +20,14 @@ export const FormicYup = () => {
       .required("Обязательно к заполнению"),
   });
 
-
-
-
   return (
     <div>
       <Formik
         initialValues={{ name: "", secondName: "", password: "", confirmPassword: "", email: "", confirmEmail: "" }}
         validateOnBlur
-        onSubmit={(values) => {
-          console.log(values);
+        onSubmit={async (values) => {
+          await new Promise((r) => setTimeout(r, 500));
+          alert(JSON.stringify(values, null, 2));
         }}
         validationSchema={validationSchema}>
         {({ values, errors, touched, handleChange, handleBlur, isValid, dirty, handleSubmit }) => (
@@ -97,7 +96,6 @@ export const FormicYup = () => {
             </div>
             {touched.confirmEmail && errors.confirmEmail && <div style={{ color: "red" }}>{errors.confirmEmail}</div>}
 
-            {/* <button disabled={!isValid && !dirty} type="submit" onClick={handleSubmit}> */}
             <button disabled={!isValid && !dirty} type="submit">
               Отправить
             </button>

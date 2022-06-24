@@ -2,9 +2,7 @@ import React from "react";
 
 export const useEmailData = () => {
   const [email, setEmail] = React.useState<string>("");
-  const [emailError, setEmailError] = React.useState<string>(
-    "Email не может быть пустым"
-  );
+  const [emailError, setEmailError] = React.useState<string>("Email не может быть пустым");
 
   const emailHandler = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,6 +12,7 @@ export const useEmailData = () => {
         // eslint-disable-next-line
         /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
+        
       if (!re.test(String(e.target.value).toLowerCase())) {
         setEmailError("Не корректный email");
       } else {
@@ -28,9 +27,7 @@ export const useEmailData = () => {
 
 export const usePasswordData = () => {
   const [password, setPassword] = React.useState<string>("");
-  const [passwordError, setPasswordError] = React.useState<string>(
-    "Pasword не может быть пустым"
-  );
+  const [passwordError, setPasswordError] = React.useState<string>("Pasword не может быть пустым");
 
   const passwordHandler = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
