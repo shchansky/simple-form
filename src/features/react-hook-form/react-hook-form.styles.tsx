@@ -6,7 +6,10 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
-  gap: 20px;
+`;
+
+export const Header = styled.h3`
+  margin: 0;
 `;
 
 export const Form = styled.form`
@@ -31,3 +34,5 @@ export const Error = styled.div`
 `;
 
 export const Button = styled.button``;
+
+export const Inner = styled.div``;

@@ -1,107 +1,114 @@
 import React from "react";
-import { Formik, Form } from "formik";
+import { Formik } from "formik";
 import * as yup from "yup";
-
+import * as Markup from "./formic-yup.styles";
 
 export const FormicYup = () => {
   const validationSchema = yup.object().shape({
     name: yup.string().required("Обязательно"),
-    secondName: yup.string().required("Обязательно"),
+    surname: yup.string().required("Обязательно"),
     password: yup.string().required("Обязательно"),
     confirmPassword: yup
       .string()
       .oneOf([yup.ref("password")], "Пароли не совпадают")
       .required("Обязательно к заполнению"),
-    email: yup.string().email("Введите верный e-mail").required("Обязательно к заполнению"),
+    email: yup.string().email("Введите верный e-mail").required("Поле Email обязательно к заполнению"),
     confirmEmail: yup
       .string()
       .email("Введите верный e-mail")
       .oneOf([yup.ref("email")], "email не совпадают")
-      .required("Обязательно к заполнению"),
+      .required("Поле подтвердите Email обязательно к заполнению"),
   });
 
   return (
-    <div>
+    <Markup.Container>
+      <Markup.Header>Formik-yup</Markup.Header>
       <Formik
-        initialValues={{ name: "", secondName: "", password: "", confirmPassword: "", email: "", confirmEmail: "" }}
+        initialValues={{ name: "", surname: "", password: "", confirmPassword: "", email: "", confirmEmail: "" }}
         validateOnBlur
-        onSubmit={async (values) => {
+        onSubmit={async (values, { resetForm }) => {
           await new Promise((r) => setTimeout(r, 500));
           alert(JSON.stringify(values, null, 2));
+          resetForm();
         }}
         validationSchema={validationSchema}>
         {({ values, errors, touched, handleChange, handleBlur, isValid, dirty, handleSubmit }) => (
-          <Form className="form">
-            <div>
-              <label htmlFor="name">Имя</label>
-              <input type="text" name="name" onChange={handleChange} onBlur={handleBlur} value={values.name} />
-            </div>
-            {touched.name && errors.name && <div style={{ color: "red" }}>Поле имя обязательно к заполнению</div>}
-
-            <div>
-              <label htmlFor="secondName">Фамилия</label>
-              <input
+          <Markup.Form className="form">
+            <Markup.Inner>
+              <Markup.Error>{touched.name && errors.name && "Поле имя обязательно к заполнению"}</Markup.Error>
+              <Markup.Input
                 type="text"
-                name="secondName"
+                name="name"
+                placeholder="Имя"
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.secondName}
+                value={values.name}
               />
-            </div>
-            {touched.secondName && errors.secondName && (
-              <div style={{ color: "red" }}>Поле фамилия обязательно к заполнению</div>
-            )}
-
-            <div>
-              <label htmlFor="password">Пароль</label>
-              <input
+            </Markup.Inner>
+            <Markup.Inner>
+              <Markup.Error>
+                {touched.surname && errors.surname && "Поле фамилия обязательно к заполнению"}
+              </Markup.Error>
+              <Markup.Input
+                type="text"
+                name="surname"
+                placeholder="Фамилия"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.surname}
+              />
+            </Markup.Inner>
+            <Markup.Inner>
+              <Markup.Error>{touched.password && errors.password && "Введите пароль"}</Markup.Error>
+              <Markup.Input
                 type="password"
                 name="password"
+                placeholder="Пароль"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.password}
               />
-            </div>
-            {touched.password && errors.password && <div style={{ color: "red" }}>Введите пароль</div>}
-
-            <div>
-              <label htmlFor="confirmPassword">Подвердите пароль</label>
-              <input
+            </Markup.Inner>
+            <Markup.Inner>
+              <Markup.Error>{touched.confirmPassword && errors.confirmPassword}</Markup.Error>
+              <Markup.Input
                 type="password"
                 name="confirmPassword"
+                placeholder="Подвердите пароль"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.confirmPassword}
               />
-            </div>
-            {touched.confirmPassword && errors.confirmPassword && (
-              <div style={{ color: "red" }}>{errors.confirmPassword}</div>
-            )}
-
-            <div>
-              <label htmlFor="email">email</label>
-              <input type="email" name="email" onChange={handleChange} onBlur={handleBlur} value={values.email} />
-            </div>
-            {touched.email && errors.email && <div style={{ color: "red" }}>{errors.email}</div>}
-
-            <div>
-              <label htmlFor="confirmEmail">confirmEmail</label>
-              <input
+            </Markup.Inner>
+            <Markup.Inner>
+              <Markup.Error>{touched.email && errors.email}</Markup.Error>
+              <Markup.Input
+                type="email"
+                name="email"
+                onChange={handleChange}
+                placeholder="Email"
+                onBlur={handleBlur}
+                value={values.email}
+              />
+            </Markup.Inner>
+            <Markup.Inner>
+              <Markup.Error>{touched.confirmEmail && errors.confirmEmail}</Markup.Error>
+              <Markup.Input
                 type="email"
                 name="confirmEmail"
+                placeholder="подтвердите Email"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.confirmEmail}
               />
-            </div>
-            {touched.confirmEmail && errors.confirmEmail && <div style={{ color: "red" }}>{errors.confirmEmail}</div>}
+            </Markup.Inner>
 
-            <button disabled={!isValid && !dirty} type="submit">
+            <Markup.Button disabled={!isValid && !dirty} type="submit">
               Отправить
-            </button>
-          </Form>
+            </Markup.Button>
+          </Markup.Form>
         )}
       </Formik>
-    </div>
+    </Markup.Container>
   );
 };

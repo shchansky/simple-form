@@ -49,8 +49,9 @@ export const ReactHookForm = () => {
 
   return (
     <Markup.Container>
+      <Markup.Header>React-hook-from</Markup.Header>
       <Markup.Form onSubmit={handleSubmit(onSubmit)}>
-        <div>
+        <Markup.Inner>
           <Markup.Error>{errors.name && errors.name.message}</Markup.Error>
           <Markup.Input
             {...register("name", {
@@ -60,9 +61,10 @@ export const ReactHookForm = () => {
             type="text"
             placeholder="Name"
           />
-        </div>
+        </Markup.Inner>
 
-        <div>
+        <Markup.Inner>
+          <Markup.Error>{errors.surname && errors.surname.message}</Markup.Error>
           <Markup.Input
             {...register("surname", {
               /** Валидация(текст ошибки) */
@@ -75,9 +77,10 @@ export const ReactHookForm = () => {
             type="text"
             placeholder="Surname"
           />
-        </div>
+        </Markup.Inner>
 
-        <div>
+        <Markup.Inner>
+          <Markup.Error>{errors.email && errors.email.message}</Markup.Error>
           <Markup.Input
             {...register("email", {
               /** Валидация(текст ошибки) */
@@ -93,8 +96,7 @@ export const ReactHookForm = () => {
             type="email"
             placeholder="Email"
           />
-          {errors.email && <div style={{ color: "red" }}>{errors.email.message}</div>}
-        </div>
+        </Markup.Inner>
 
         <Controller
           control={control}
@@ -115,13 +117,14 @@ export const ReactHookForm = () => {
           )}
         />
 
-        <div>
+        <Markup.Inner>
           <Markup.Button type="submit" disabled={!isValid}>
             Send
           </Markup.Button>
-        </div>
+        </Markup.Inner>
       </Markup.Form>
-      <div>
+
+      <Markup.Inner>
         <Markup.Button
           onClick={() => {
             setValue("name", "Michail");
@@ -129,7 +132,7 @@ export const ReactHookForm = () => {
           }}>
           Кнопка автозаполнения формы
         </Markup.Button>
-      </div>
+      </Markup.Inner>
     </Markup.Container>
   );
 };
