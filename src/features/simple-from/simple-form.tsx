@@ -10,7 +10,7 @@ export const SimpleForm = () => {
   return (
     <Markup.Container>
       <Markup.Header>Simple Form</Markup.Header>
-      <Markup.Form>
+      <Markup.Form autoComplete="off">
         <Markup.Error style={{ color: "red" }}>{emailDirty && emailError}</Markup.Error>
         <Markup.Input
           name="email"

@@ -50,7 +50,7 @@ export const ReactHookForm = () => {
   return (
     <Markup.Container>
       <Markup.Header>React-hook-from</Markup.Header>
-      <Markup.Form onSubmit={handleSubmit(onSubmit)}>
+      <Markup.Form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
         <Markup.Inner>
           <Markup.Error>{errors.name && errors.name.message}</Markup.Error>
           <Markup.Input

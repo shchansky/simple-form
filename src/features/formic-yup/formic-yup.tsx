@@ -33,7 +33,7 @@ export const FormicYup = () => {
         }}
         validationSchema={validationSchema}>
         {({ values, errors, touched, handleChange, handleBlur, isValid, dirty, handleSubmit }) => (
-          <Markup.Form className="form">
+          <Markup.Form className="form" autoComplete="off">
             <Markup.Inner>
               <Markup.Error>{touched.name && errors.name && "Поле имя обязательно к заполнению"}</Markup.Error>
               <Markup.Input
